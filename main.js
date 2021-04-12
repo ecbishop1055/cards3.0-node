@@ -2,25 +2,25 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
+const pug = require("pug");
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "views")));
+// let account = ["Jerry", "John", "Joe"]
+
+// Set views path
+app.set('views', path.join(__dirname, 'views'));
+// Set public path
+app.use(express.static(path.join(__dirname, 'public')));
+
+// const compiledFunction = pug.compileFile('views/pugtemplate.pug')
+
+
+app.set("view engine", "pug");
 
 app.get("/", (req, res) => {
-  res.render("index");
-});
+  res.render("index", {
+    // name: account[0]
+  });
 
-app.post("/login", (req, res) => {
-  const { name, password } = req.body;
-
-  if (name === "admin" && password === "admin") {
-    res.render("success", {
-      username: name,
-    });
-  } else {
-    res.render("failure");
-  }
 });
 
 app.listen(3000, () => {
