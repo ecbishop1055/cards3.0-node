@@ -1,5 +1,4 @@
-{
-  "name": "cards3.0",
+{ "name": "cards3.0",
   "version": "3.0.0",
   "description": "dylan and ethan cards remake",
   "main": "main.js",
@@ -10,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/ecbishop1055/cards3.0-node.git"
   },
-  "author": "Dyland & Ethan",
+  "author": "Dylan & Ethan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ecbishop1055/cards3.0-node/issues"
