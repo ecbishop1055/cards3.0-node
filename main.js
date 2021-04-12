@@ -1,28 +1,38 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const path = require("path");
 const app = express();
 const pug = require("pug");
 
-// let account = ["Jerry", "John", "Joe"]
-
-// Set views path
+// Set Views path
 app.set('views', path.join(__dirname, 'views'));
-// Set public path
+// Set CSS path
 app.use(express.static(path.join(__dirname, 'public')));
-
-// const compiledFunction = pug.compileFile('views/pugtemplate.pug')
-
-
+// Set View Engine
 app.set("view engine", "pug");
 
+// Index View
 app.get("/", (req, res) => {
   res.render("index", {
-    // name: account[0]
   });
-
 });
 
+// Definition View
+app.get('/definitions', (req, res) => {
+      res.render('definitions', {
+      });
+  });
+
+// Reflection View
+app.get('/reflections', (req, res) => {
+      res.render('reflections',{
+      });
+});
+
+// Home View
+app.get('/home', (req, res) => {
+      res.render('home',{
+      });
+});
 app.listen(3000, () => {
   console.log("server started on port 3000");
 });
