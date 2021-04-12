@@ -10,9 +10,6 @@ const path = require('path');
 
 app.use(express.static(path.join(__dirname, 'templates')))
 
-app.get("/definitions", (req,res) => {
-  res.send("Define")
-})
 
 .listen(port, () => {
     console.log(`The express.js server has started and is listening on port number: ${port}`);
