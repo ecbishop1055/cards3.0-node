@@ -1,0 +1,22 @@
+{
+  "name": "cards3.0",
+  "version": "3.0.0",
+  "description": "dylan and ethan cards remake",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecbishop1055/cards3.0-node.git"
+  },
+  "author": "Dyland & Ethan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ecbishop1055/cards3.0-node/issues"
+  },
+  "homepage": "https://github.com/ecbishop1055/cards3.0-node#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
