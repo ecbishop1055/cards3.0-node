@@ -4,11 +4,16 @@ const port = process.env.PORT || 3000,
 
 const path = require('path');
 
-// app.get("/", (req, res) => {
-//     res.sendFile(path.join(__dirname, 'templates', 'index.html'));
-// })
+app.set('view engine', "ejs")
 
-app.use(express.static(path.join(__dirname, 'templates')))
+app.get("/", (req, res) => {
+    res.render("index");
+})
+
+//  Static Folder
+// app.use(express.static(path.join(__dirname, 'templates')))
+
+//
 
 
 .listen(port, () => {
