@@ -1,21 +1,28 @@
-const port = process.env.PORT || 3000,
-    express = require("express"),
-    app = express();
+const express = require("express");
+const bodyParser = require("body-parser");
+const path = require("path");
+const app = express();
 
-const path = require('path');
-
-app.set('view engine', "ejs")
+app.use(bodyParser.urlencoded({ extended: false }));
+app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "views")));
 
 app.get("/", (req, res) => {
-    res.render("index");
-})
+  res.render("index");
+});
 
-//  Static Folder
-// app.use(express.static(path.join(__dirname, 'templates')))
+app.post("/login", (req, res) => {
+  const { name, password } = req.body;
 
-//
+  if (name === "admin" && password === "admin") {
+    res.render("success", {
+      username: name,
+    });
+  } else {
+    res.render("failure");
+  }
+});
 
-
-.listen(port, () => {
-    console.log(`The express.js server has started and is listening on port number: ${port}`);
+app.listen(3000, () => {
+  console.log("server started on port 3000");
 });
