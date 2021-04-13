@@ -37,6 +37,12 @@ app.get('/reflections', (req, res) => {
       });
 });
 
+// Register View
+app.get('/login', (req, res) => {
+  res.render('login',{
+  });
+});
+
 // Home View
 app.get('/home', (req, res) => {
       res.render('home',{
