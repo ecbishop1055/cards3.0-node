@@ -4,8 +4,8 @@
   "description": "dylan and ethan cards remake",
   "main": "main.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "nodemon main",
+    "dev": "nodemon main"
   },
   "repository": {
     "type": "git",
