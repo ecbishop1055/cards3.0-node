@@ -1,10 +1,10 @@
-const.form = document.getElementById('reg-form')
+const form = document.getElementById('reg-form')
 form.addEventListener('submit', registerUser)
 
-async funtion registerUser(event) {
+async function registerUser(event) {
   event.preventDefault()
-  const username = document.getElementById('username')
-  const password = document.getElementById('password')
+  const username = document.getElementById('username').value
+  const password = document.getElementById('password').value
 
   const result = await fetch('/api/register', {
     method: 'POST',
