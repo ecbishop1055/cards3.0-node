@@ -2,6 +2,15 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const pug = require("pug");
+const MongoClient = require('mongodb').MongoClient
+const connectionString = 'mongodb+srv://admin:admin@cluster0.xbdzk.mongodb.net/cluster0-shard-00-01.xbdzk.mongodb.net:27017?retryWrites=true&w=majority'
+
+MongoClient.connect(connectionString, {
+  useUnifiedTopology: true
+}, (err, client) => {
+  if (err) return console.error(err)
+  console.log('Connected to Database')
+});
 
 // Set Views path
 app.set('views', path.join(__dirname, 'views'));
