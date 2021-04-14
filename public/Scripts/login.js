@@ -20,6 +20,7 @@ async function loginUser(event) {
   if(result.status === 'ok'){
     console.log('Got the token: ', result.data)
     alert('Success')
+    window.location = "/home"
 
   } else {
 
