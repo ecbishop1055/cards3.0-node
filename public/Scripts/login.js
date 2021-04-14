@@ -1,5 +1,5 @@
 const login = document.getElementById('login')
-login.addEventListener('submit', login)
+login.addEventListener('submit', loginUser)
 
 async function loginUser(event) {
   event.preventDefault()
