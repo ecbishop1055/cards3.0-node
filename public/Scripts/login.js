@@ -1,12 +1,12 @@
-const form = document.getElementById('reg-form')
-form.addEventListener('submit', registerUser)
+const login = document.getElementById('login')
+login.addEventListener('submit', login)
 
-async function registerUser(event) {
+async function loginUser(event) {
   event.preventDefault()
   const username = document.getElementById('username').value
   const password = document.getElementById('password').value
 
-  const result = await fetch('/api/register', {
+  const result = await fetch('/api/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -16,9 +16,13 @@ async function registerUser(event) {
       password
     })
   }).then((res) => res.json())
+
   if(result.status === 'ok'){
+    console.log('Got the token: ', result.data)
     alert('Success')
+
   } else {
+
     alert(result.error);
   }
 }
