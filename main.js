@@ -30,37 +30,41 @@ app.set("view engine", "pug");
 
 // Index View
 app.get("/", (req, res) => {
-  res.render("index", {
-  });
+  res.render("index", {});
 });
 
 // Definition View
 app.get('/definitions', (req, res) => {
-      res.render('definitions', {
-      });
-  });
+  res.render('definitions', {});
+});
 
 // Reflection View
 app.get('/reflections', (req, res) => {
-      res.render('reflections',{
-      });
+  res.render('reflections', {});
 });
 
 // Login View
 app.get('/login', (req, res) => {
-  res.render('login',{
-  });
+  res.render('login', {});
 });
 
 app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body
-  const user = await User.findOne({ username }).lean()
+  const {
+    username,
+    password
+  } = req.body
+  const user = await User.findOne({
+    username
+  }).lean()
 
-  if(!user){
-    return res.json({ status: 'error', error: 'Invalid username/password'})
+  if (!user) {
+    return res.json({
+      status: 'error',
+      error: 'Invalid username/password'
+    })
   }
 
-  if(await bcrypt.compare(password, user.password)){
+  if (await bcrypt.compare(password, user.password)) {
     // the username, password combination is successful
 
     const token = jwt.sign({
@@ -68,10 +72,16 @@ app.post('/api/login', async (req, res) => {
       username: user.username
     }, JWT_SECRET);
 
-    return res.json({ status: 'ok', data: ''});
-  }
+    return res.json({
+      status: 'ok',
+      data: ''
+    });
 
-  res.json({ status: 'error', data: 'COMING SOON'});
+  }
+  res.json({
+    status: 'error',
+    data: token
+  });
 })
 
 // Register View
@@ -83,8 +93,7 @@ app.get('/register', (req, res) => {
 
 // Home View
 app.get('/home', (req, res) => {
-      res.render('home',{
-      });
+  res.render('home', {});
 });
 
 app.post('/api/register', async (req, res) => {
@@ -92,18 +101,30 @@ app.post('/api/register', async (req, res) => {
   console.log(req.body);
   // Analysts
   // Scripts reading databases
-  const { username, password: plainTextPassword } = req.body;
+  const {
+    username,
+    password: plainTextPassword
+  } = req.body;
 
   if (!username || typeof username !== 'string') {
-    return res.json({ status: 'error', error: 'Invalid username'})
+    return res.json({
+      status: 'error',
+      error: 'Invalid username'
+    })
   }
 
   if (!plainTextPassword || typeof plainTextPassword !== 'string') {
-    return res.json({ status: 'error', error: 'Invalid password'})
+    return res.json({
+      status: 'error',
+      error: 'Invalid password'
+    })
   }
 
-  if(plainTextPassword.length < 5){
-    return res.json({ status: 'error', error: 'Password too small. Should be atleast 6 characters'})
+  if (plainTextPassword.length < 5) {
+    return res.json({
+      status: 'error',
+      error: 'Password too small. Should be atleast 6 characters'
+    })
   }
 
 
@@ -115,13 +136,18 @@ app.post('/api/register', async (req, res) => {
       password
     })
     console.log('User created successfully:', response)
-  } catch(error) {
+  } catch (error) {
     if (error.code === 11000) {
-      return res.json({ status: 'error', error: 'Username already in use!'})
+      return res.json({
+        status: 'error',
+        error: 'Username already in use!'
+      })
     }
   }
 
-  res.json({status: 'ok'});
+  res.json({
+    status: 'ok'
+  });
 })
 
 // Post
