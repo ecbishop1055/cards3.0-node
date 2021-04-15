@@ -18,6 +18,7 @@ async function registerUser(event) {
   }).then((res) => res.json())
   if(result.status === 'ok'){
     alert('Success')
+    window.location = "/login"
   } else {
     alert(result.error);
   }
