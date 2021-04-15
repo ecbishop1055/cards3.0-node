@@ -17,6 +17,16 @@ mongoose.connect('mongodb://localhost:27017/login-app-db', {
   useCreateIndex: true
 });
 
+const checkUser = function (req, res, next) {
+  const token = req.header
+  const user = jwt.verify(token, JWT_SECRET);
+  const _id = user.id;
+  req.user = user;
+  next();
+}
+
+app.use(checkUser);
+
 // Set Views path
 app.set('views', path.join(__dirname, 'views'));
 // Set CSS path
@@ -198,6 +208,7 @@ app.post('/api/register', async (req, res) => {
     status: 'ok'
   });
 })
+
 
 // Post
 // app.post('/login', async (req,res) => {
