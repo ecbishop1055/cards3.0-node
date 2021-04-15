@@ -75,6 +75,16 @@ app.get('/reflections', isAuth, (req, res) => {
   res.render('reflections', {});
 });
 
+app.get("/userReflections", (req,res) => {
+  if(isAuth){
+    user = req.session.user
+    
+    res.render('userReflections', { user: user.username })
+  } else {
+    res.render('userReflections', {});
+  }
+})
+
 // Login View
 app.get('/login', (req, res) => {
   res.render('login', {});
@@ -92,6 +102,14 @@ app.get('/register', (req, res) => {
 app.get('/home', async (req, res) => {
       user = req.session.user
       res.render('home', { user: user.username })
+  if(isAuth){
+    user = req.session.user
+    
+    res.render('home', { user: user.username })
+  } else {
+    res.render('home', {});
+  }
+  
 });
 
 // HTML Definitions View
