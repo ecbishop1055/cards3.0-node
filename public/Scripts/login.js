@@ -18,8 +18,6 @@ async function loginUser(event) {
   }).then((res) => res.json())
 
   if(result.status === 'ok'){
-    console.log('Got the token: ', result.data)
-    localStorage.setItem('token', result.data);
     alert('Success')
     window.location = "/home"
 

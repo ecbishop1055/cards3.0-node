@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const session = require("express-session")
+const cookieParser = require("cookie-parser")
 const mongoDBSession = require("connect-mongodb-session")(session);
 const pug = require("pug");
 const bodyParser = require("body-parser");
@@ -14,6 +15,13 @@ const connectionString = 'mongodb+srv://admin:admin@cluster0.xbdzk.mongodb.net/c
 
 const mongoURI = 'mongodb://localhost:27017/login-app-db'
 
+app.use(express.json())
+
+app.use(express.urlencoded({
+  extended: true
+}));
+
+app.use(cookieParser());
 //db mongoose(local only right now)
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
@@ -33,15 +41,6 @@ app.use(session({
   store: store,
 }))
 
-// const checkUser = function (req, res, next) {
-//   const token = req.header
-//   const user = jwt.verify(token, JWT_SECRET);
-//   const _id = user.id;
-//   req.user = user;
-//   next();
-// }
-
-// app.use(checkUser);
 
 // Set Views path
 app.set('views', path.join(__dirname, 'views'));
@@ -49,7 +48,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //use body-parser
-app.use(bodyParser.json())
 
 // Set View Engine
 app.set("view engine", "pug");
@@ -64,6 +62,7 @@ const isAuth = (req, res, next) => {
 
 // Index View
 app.get("/", (req, res) => {
+
   res.render("index", {});
 });
 
@@ -73,7 +72,7 @@ app.get('/definitions', (req, res) => {
 });
 
 // Reflection View
-app.get('/reflections', (req, res) => {
+app.get('/reflections', isAuth, (req, res) => {
   res.render('reflections', {});
 });
 
@@ -91,9 +90,15 @@ app.get('/register', (req, res) => {
 });
 
 // Home View
-app.get('/home', (req, res) => {
-  req.session.isAuth = true;
-  res.render('home', {});
+app.get('/home', async (req, res) => {
+  if(isAuth){
+    user = req.session.user
+    // let currUser = ("request: " + JSON.stringify(req.session.currUser))
+    res.render('home', { user: user.username })
+  } else {
+    res.render('home', {});
+  }
+  
 });
 
 // HTML Definitions View
@@ -128,25 +133,16 @@ app.post('/api/login', async (req, res) => {
 
   if (await bcrypt.compare(password, user.password)) {
     // the username, password combination is successful
-    const token = jwt.sign({
-      id: user._id,
-      username: user.username
-    }, JWT_SECRET);
-
     req.session.isAuth = true;
-
-
-
+    req.session.user = user;
     return res.json({
       status: 'ok',
-      data: token
     });
 
 
   }
   res.json({
     status: 'error',
-    data: token
   });
 })
 
@@ -205,7 +201,8 @@ app.post('/api/change-password', async (req, res) => {
 
 // Home View
 app.get('/home', (req, res) => {
-  res.render('home', {});
+  user = req.body.id
+  res.render('home', { user });
 });
 
 app.post('/api/register', async (req, res) => {
@@ -269,7 +266,7 @@ app.post('/api/register', async (req, res) => {
 //   res.json({status : 'ok '})
 // })
 
-app.use(bodyParser.json());
+
 
 app.listen(3000, () => {
   console.log("server started on port 3000");
