@@ -49,6 +49,32 @@ app.get('/login', (req, res) => {
 });
 // check current user
 
+// Register View
+app.get('/register', (req, res) => {
+  res.render('register', {
+
+  });
+});
+
+// Home View
+app.get('/home', (req, res) => {
+  res.render('home', {});
+});
+
+// HTML Definitions View
+app.get('/htmlDefinitions', (req,res) =>{
+  res.render('htmlDef', {
+
+  });
+});
+
+// Python Definitions View
+app.get('/pythonDefinitions', (req,res) =>{
+  res.render('pythonDef', {
+
+  });
+});
+
 app.post('/api/login', async (req, res) => {
   const {
     username,
