@@ -62,7 +62,6 @@ const isAuth = (req, res, next) => {
 
 // Index View
 app.get("/", (req, res) => {
-
   res.render("index", {});
 });
 
@@ -91,14 +90,8 @@ app.get('/register', (req, res) => {
 
 // Home View
 app.get('/home', async (req, res) => {
-  if(isAuth){
-    user = req.session.user
-    // let currUser = ("request: " + JSON.stringify(req.session.currUser))
-    res.render('home', { user: user.username })
-  } else {
-    res.render('home', {});
-  }
-  
+      user = req.session.user
+      res.render('home', { user: user.username })
 });
 
 // HTML Definitions View
@@ -200,10 +193,6 @@ app.post('/api/change-password', async (req, res) => {
 
 
 // Home View
-app.get('/home', (req, res) => {
-  user = req.body.id
-  res.render('home', { user });
-});
 
 app.post('/api/register', async (req, res) => {
 
@@ -260,11 +249,12 @@ app.post('/api/register', async (req, res) => {
 })
 
 
-// Post
-// app.post('/login', async (req,res) => {
-//   console.log(req.body)
-//   res.json({status : 'ok '})
-// })
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if(err) throw err;
+    res.redirect("/");
+  })
+})
 
 
 
