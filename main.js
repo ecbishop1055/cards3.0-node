@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const session = require("express-session")
+const mongoDBSession = require("connect-mongodb-session")(session);
 const pug = require("pug");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -10,22 +12,36 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = ';alskdj(*)&036)(*@&#)*^)*&#)(*&fpoeiasdjfpioeajsndpih8932uijanw90ifuq98jeif-98j42'
 const connectionString = 'mongodb+srv://admin:admin@cluster0.xbdzk.mongodb.net/cluster0-shard-00-01.xbdzk.mongodb.net:27017?retryWrites=true&w=majority'
 
+const mongoURI = 'mongodb://localhost:27017/login-app-db'
+
 //db mongoose(local only right now)
-mongoose.connect('mongodb://localhost:27017/login-app-db', {
+mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true
 });
 
-const checkUser = function (req, res, next) {
-  const token = req.header
-  const user = jwt.verify(token, JWT_SECRET);
-  const _id = user.id;
-  req.user = user;
-  next();
-}
+const store = new mongoDBSession({
+  uri: mongoURI,
+  collection: 'mySessions',
+})
 
-app.use(checkUser);
+app.use(session({
+  secret: 'key that will sign the cookie',
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+}))
+
+// const checkUser = function (req, res, next) {
+//   const token = req.header
+//   const user = jwt.verify(token, JWT_SECRET);
+//   const _id = user.id;
+//   req.user = user;
+//   next();
+// }
+
+// app.use(checkUser);
 
 // Set Views path
 app.set('views', path.join(__dirname, 'views'));
@@ -40,6 +56,7 @@ app.set("view engine", "pug");
 
 // Index View
 app.get("/", (req, res) => {
+  req.session.isAuth = true;
   res.render("index", {});
 });
 
