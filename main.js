@@ -54,9 +54,16 @@ app.use(bodyParser.json())
 // Set View Engine
 app.set("view engine", "pug");
 
+const isAuth = (req, res, next) => {
+  if(req.session.isAuth) {
+    next();
+  } else {
+    res.redirect("/login ")
+  }
+}
+
 // Index View
 app.get("/", (req, res) => {
-  req.session.isAuth = true;
   res.render("index", {});
 });
 
@@ -85,6 +92,7 @@ app.get('/register', (req, res) => {
 
 // Home View
 app.get('/home', (req, res) => {
+  req.session.isAuth = true;
   res.render('home', {});
 });
 
@@ -124,6 +132,8 @@ app.post('/api/login', async (req, res) => {
       id: user._id,
       username: user.username
     }, JWT_SECRET);
+
+    req.session.isAuth = true;
 
 
 
