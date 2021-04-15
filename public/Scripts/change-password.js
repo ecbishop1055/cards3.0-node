@@ -1,30 +1,29 @@
-const login = document.getElementById('login')
-login.addEventListener('submit', loginUser)
+const form = document.getElementById('reg-form')
+form.addEventListener('submit', passwordChange)
 
-async function loginUser(event) {
+async function passwordChange(event) {
   event.preventDefault()
-  const username = document.getElementById('username').value
   const password = document.getElementById('password').value
 
-  const result = await fetch('/api/login', {
+  const result = await fetch('/api/change-password', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      username,
-      password
+      newpassword: password,
+      token: localStorage.getItem('token')
     })
   }).then((res) => res.json())
 
   if(result.status === 'ok'){
-    console.log('Got the token: ', result.data)
-    localStorage.setItem('token', result.data);
+
     alert('Success')
     window.location = "/home"
 
   } else {
 
     alert(result.error);
+
   }
 }

@@ -47,6 +47,7 @@ app.get('/reflections', (req, res) => {
 app.get('/login', (req, res) => {
   res.render('login', {});
 });
+// check current user
 
 app.post('/api/login', async (req, res) => {
   const {
@@ -71,9 +72,11 @@ app.post('/api/login', async (req, res) => {
       username: user.username
     }, JWT_SECRET);
 
+
+
     return res.json({
       status: 'ok',
-      data: ''
+      data: token
     });
 
 
@@ -90,6 +93,52 @@ app.get('/register', (req, res) => {
 
   });
 });
+
+
+app.get('/change-password', (req, res) => {
+  res.render('change-password', {
+
+  })
+});
+
+app.post('/api/change-password', async (req, res) => {
+  const { token, newpassword: plainTextPassword } = req.body
+
+  if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+    return res.json({
+      status: 'error',
+      error: 'Invalid password'
+    })
+  }
+
+  if (plainTextPassword.length < 5) {
+    return res.json({
+      status: 'error',
+      error: 'Password too small. Should be at least 6 characters'
+    });
+  }
+
+
+  try {
+    const user = jwt.verify(token, JWT_SECRET)
+
+    const _id = user.id
+
+    const password = await bcrypt.hash(plainTextPassword, 15)
+    await User.updateOne(
+      { _id },
+      {
+        $set: { password }
+      }
+    )
+    res.json({ status: 'ok' })
+  } catch (error) {
+    console.log(error);
+    res.json({ status: 'error', error: ';))' });
+  }
+  
+});
+
 
 // Home View
 app.get('/home', (req, res) => {
@@ -123,7 +172,7 @@ app.post('/api/register', async (req, res) => {
   if (plainTextPassword.length < 5) {
     return res.json({
       status: 'error',
-      error: 'Password too small. Should be atleast 6 characters'
+      error: 'Password too small. Should be at least 6 characters'
     })
   }
 
