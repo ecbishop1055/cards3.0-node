@@ -1,5 +1,5 @@
 // # seconds to animation end
-var animTime = 110000; // ~8 minutes for all tweets with pics, reduce for text-only tweets
+var animTime = 480000; // ~8 minutes for all tweets with pics, reduce for text-only tweets
 
 $(function() {
   loadTwitterWidget();
@@ -14,8 +14,8 @@ function loadTwitterWidget() {
     $("#twit")[0],
     {
       chrome: "noheader nofooter noscrollbar noborders transparent",
-      height: 400,
-      width: 600
+      height: 100,
+      width: 200
     }
   ];
 
@@ -36,8 +36,7 @@ function loadTwitterWidget() {
     return [
       $(".timeline-InformationCircle", iframe),
       $(".timeline-LoadMore", iframe),
-      $(".timeline-NewTweetsNotification", iframe),
-      
+      $(".timeline-NewTweetsNotification", iframe)
     ];
   }
 

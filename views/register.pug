@@ -1,14 +1,19 @@
 include index.pug
 body
-h1 Register an Account!
-  form(id="reg-form" method="POST")
-    p
-      | Username: 
-      input(type='text', id="username" name='username' required)
-      | Password: 
-      input(type='password', id="password" name='password' required)
-      
-      input(type='submit', value='Register')
-      
-      script(type='text/javascript' src="/Scripts/register.js")
+h1 Register!
+
+  <div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+
+    <!-- Register Form -->
+    <form id="reg-form" method="POST">
+      <input type="text" id="username" class="fadeIn second" name="login" placeholder="Username" required>
+      <input type="text" id="password" style="-webkit-text-security: disc;" class="fadeIn third" name="password" placeholder="Password" required>
+      <input type="submit" class="fadeIn fourth" value="Register">
+    </form>
+  </div>
+</div>
+    script(type='text/javascript' src="/Scripts/register.js")
   
