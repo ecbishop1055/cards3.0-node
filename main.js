@@ -90,8 +90,6 @@ app.post('/api/reflections', async (req, res) => {
   const response = await User.create({
     reflections
   })
-  
-
 })
 
 // Login View
