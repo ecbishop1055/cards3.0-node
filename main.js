@@ -62,13 +62,7 @@ const isAuth = (req, res, next) => {
 
 // Index View
 app.get("/", (req, res) => {
-  if(isAuth){
-    user = req.session.user
-    
-    res.render('index', { user: user.username })
-  } else {
-    res.render('index', {});
-  }
+  res.render("index", {});
 });
 
 // Definition View
@@ -91,6 +85,15 @@ app.get("/userReflections", (req,res) => {
   }
 })
 
+app.post('/api/reflections', async (req, res) => {
+  const { reflections } = req.body;
+  const response = await User.create({
+    reflections
+  })
+  
+
+})
+
 // Login View
 app.get('/login', (req, res) => {
   res.render('login', {});
@@ -106,6 +109,8 @@ app.get('/register', (req, res) => {
 
 // Home View
 app.get('/home', async (req, res) => {
+      // user = req.session.user
+      // res.render('home', { user: user.username })
   if(isAuth){
     user = req.session.user
     
@@ -215,10 +220,6 @@ app.post('/api/change-password', async (req, res) => {
 
 
 // Home View
-app.get('/home', (req, res) => {
-  user = req.body.id
-  res.render('home', { user });
-});
 
 app.post('/api/register', async (req, res) => {
 
@@ -275,11 +276,13 @@ app.post('/api/register', async (req, res) => {
 })
 
 
-// Post
-// app.post('/login', async (req,res) => {
-//   console.log(req.body)
-//   res.json({status : 'ok '})
-// })
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    req.session = null
+    if(err) throw err;
+    res.redirect("/");
+  })
+})
 
 
 
