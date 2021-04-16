@@ -107,16 +107,17 @@ app.get('/register', (req, res) => {
   });
 });
 
+
 // Home View
-app.get('/home', async (req, res) => {
+app.get('/home', async (req, res,err) => {
       // user = req.session.user
       // res.render('home', { user: user.username })
-  if(isAuth){
+  try{
+    isAuth();
     user = req.session.user
-    
-    res.render('home', { user: user.username })
-  } else {
-    res.render('home', {});
+    res.render("home", {user: user.username})
+  } catch (err){
+    res.render("home")
   }
   
 });
