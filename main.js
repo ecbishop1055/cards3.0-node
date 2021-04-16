@@ -111,7 +111,7 @@ app.get('/home', async (req, res,err) => {
       // user = req.session.user
       // res.render('home', { user: user.username })
   try{
-    isAuth();
+    isAuth
     user = req.session.user
     res.render("home", {user: user.username})
   } catch (err){
@@ -279,7 +279,7 @@ app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
     req.session = null
     if(err) throw err;
-    res.redirect("/");
+    res.redirect("login");
   })
 })
 
