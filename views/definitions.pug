@@ -1,13 +1,56 @@
 include index.pug
-script(type='text/javascript' src="/Scripts/definition.js")
-body
-  <div style="padding: 15px;">
-    <div id="container" style="background:#f2f2f2; border-radius:25px; border:.5px solid black; width:620px; margin-top: 15px; margin-left: 15px; padding: 8px; height:140px; ">
-    <h1>Python Definition Flash Cards</h1>
-    <a href="/pythonDefinitions" style="margin-left:25px;"><button type="button" class="btn btn-dark" style="font-size:20px;">Start now!</button></a>
-    </div>
-    <div id="container" style="margin-top:10px; background:#f2f2f2; border-radius:20px; border:.5px solid black; width:620px; margin-top: 15px; margin-left: 15px; padding: 8px; height:140px; ">
-    <h1>HTML/CSS Definition Flash Cards</h1>
-    <a href="/htmlDefinitions" style="margin-left:25px;"><button type="button" class="btn btn-dark" style="font-size:20px;">Start now!</button></a>
-    </div>
+<body>
+  <h1>Flashcards</h1><br><br>
+  <p id="front">
+    <!-- term lives here   -->
+  </p><br>
+  <hr><br>
+  <div id="back">
+    <!-- definition lives here   -->
+  </div><br>
+  <div id ="activeCardButtons">
+    <button id="prev" onclick="prevCard()">Previous Card
+  </button>
+  <button id="flip" type="button" value="Flip" onclick="flash()">Flip</button>
+  <button id="next" onclick="nextCard()">Next Card
+  </button>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div id="formContainer">
+    <form id="cardForm">
+      <input id="newTerm" type="text" placeholder="Add your own term or concept..." onKeyDown="if(event.keyCode==13) document.getElementById('newDef').focus()">
+      <input id="newDef" type="text" placeholder="...give it a definition, then click the button to..." onKeyDown="if(event.keyCode==13) cardAdd()">
+      <br>
+      <input id="submit" type="button" value="add it to the deck!" onClick="cardAdd()">
+      <br>
+      <input id="clearDeck" type="button" value="Click HERE to clear the deck!" onClick="emptyDeck()">
+    </form>
+    <br>
+  </div>
+<select id="selectCards" style="display:none;">
+
+</select>
+<div id="importExport">
+    
+<div id="import"> 
+    <h2 style="text-align:center;">Import</h2>
+    <p>choose a local file containing a <code>.json</code> array of cards, and then click below!</p>
+      <input id="uploadDeck" type="file"></input>
+    <button id="deckSubmit" onclick="upload_deck()">Choose a File and Click Here</button>
+
 </div>
+	
+  <div id="export"> 
+    <a class="close" id="close" onclick="slideOut()"></a>
+  <h2 style="text-align:center;color:white;">Export</h2>
+    <p style="color:white;">Click below to save a local <code>.json</code> file containing the current deck.</p>
+		
+      <button id="saveDeck" onclick="download_deck()">Save this Deck?</button>
+</div>
+ 
+  </div>
+<a class="activator" id="activator" onclick="slideIn()">Click Here to Import & Export/Save Decks of Cards</a>
+script(type='text/javascript' src="/Scripts/definition.js")
+</body>

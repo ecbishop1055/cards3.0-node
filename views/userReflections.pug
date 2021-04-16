@@ -1,4 +1,10 @@
 include index.pug 
 h1 #{user}'s Reflections
 
+<ul id="userReflections">
+</ul>
 
+script.
+    function getText(){
+        var textVal = localStorage.getItem("textArea");
+    }

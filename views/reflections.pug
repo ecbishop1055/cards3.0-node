@@ -4,8 +4,16 @@ body.tempReflect
   form
     p
       | Reflection: 
-      <textarea rows="10" cols="50" name="comment" required></textarea>
-      input(type='submit', value='Submit Reflection' style="margin-left: 10px;")
+      <textarea id="text-area" rows="10" cols="50" name="comment" required></textarea>
+      input(type='submit', value='Submit Reflection' id="submitRef" style="margin-left: 10px;")
 
 
-  <button><a href="/userReflections">View Reflections</a></button>
+  <button><a href="/userReflections" id="viewRef">View Reflections</a></button>
+script.
+  function createLink(val) {
+      document.getElementById("userReflections").innerHTML = val;
+      document.getElementById('submitRef').style.display = 'none';
+      document.getElementById('text-area').style.display = 'none';
+
+      localStorage.setItem("textArea", val);
+  }
